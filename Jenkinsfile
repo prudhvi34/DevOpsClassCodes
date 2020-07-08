@@ -23,6 +23,11 @@ pipeline{
             steps{
                 sh 'mvn pmd:pmd'
             }
+            post{
+                always{
+                    pmd pattern 'target/pmd.xml'
+                }
+            }
             
         }
         stage('unitTest'){
@@ -30,11 +35,21 @@ pipeline{
             steps{
                sh 'mvn test'
             }
+            post{
+                always{
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
         stage('MetricCheck'){
             agent any
             steps{
                 sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+            }
+            post{
+                always{
+                    cobertuta coberturaReportFile 'target/site/cobertura/coverage.xml'
+                }
             }
         }
         stage('package'){
