@@ -25,7 +25,7 @@ pipeline{
             }
             post{
                 always{
-                    pmd pattern 'target/pmd.xml'
+                    pmd pattern: 'target/pmd.xml'
                 }
             }
             
@@ -48,7 +48,7 @@ pipeline{
             }
             post{
                 always{
-                    cobertuta coberturaReportFile 'target/site/cobertura/coverage.xml'
+                    cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
                 }
             }
         }
